@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./src/routes/user-routes');
 const expenseRoutes = require('./src/routes/expense-routes');
 const authModule = require('./src/middlewares/auth');
+var cors = require('cors')
 const mongoString = process.env.DATABASE_URL
 
 mongoose.connect(mongoString);
@@ -17,7 +18,7 @@ database.on('error', (error) => {
 database.once('connected', () => {
     console.log('Database Connected');
 })
-
+app.use(cors())
 app.use(express.json())
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/tracker', authModule.verifyAuthToken, expenseRoutes)
