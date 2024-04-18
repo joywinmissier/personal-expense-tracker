@@ -74,12 +74,12 @@ exports.getUserByEmail = async (req,res) => {
         if(userByEmail.length > 0){
             const [user] = userByEmail;
             res.json({
-                userDetail : userByEmail,
+                userDetails : userByEmail,
                 authToken : authModule.generateAuthToken(user._id)
             })
         }
         else {
-            res.status(404).json({message: 'User not found', userDetail : []})
+            res.status(404).json({message: 'User not found', userDetails : []})
         }
         
     }

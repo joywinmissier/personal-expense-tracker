@@ -6,7 +6,9 @@ exports.createExpense = async (req, res) => {
         description: req.body.description ?? '',
         amount: req.body.amount,
         date : req.body.date,
-        category : req.body.category
+        category : req.body.category,
+        paymentMode : req.body.paymentMode,
+        createdBy: req.body.createdBy
     })
 
     try {
@@ -21,6 +23,16 @@ exports.createExpense = async (req, res) => {
 exports.getAllExpenses = async (req, res) => {
     try{
         const data = await ExpenseModel.find();
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+}
+
+exports.getAllExpensesForUser = async (req, res) => {
+    try{
+        const data = await ExpenseModel.find({ createdBy: req.params.id});
         res.json(data)
     }
     catch(error){
